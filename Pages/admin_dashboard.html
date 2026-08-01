@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>StudentHub-Admin Dashboard</title>
+    </head>
+
+    <body>
+        <!--Header-->
+        <header>
+            <a href="index.html">
+            <h2>StudentHub</h2>
+            </a>
+
+            <!--Actions-->
+            <nav aria-label="Admin Profile Navigation">
+                <ul>
+                    <li><span>Welcome, Admin</span></li>
+                    <li><a href="login.html">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div>
+            <!--Sidebar Navigation-->
+            <aside aria-label="Admin Navigation">
+                <nav>
+                    <ul>
+                        <li><a href="admin_dashboard.html" aria-current="page">Dashboard</a></li>
+                        <li><a href="manage_students.html">Manage Students</a></li>
+                        <li><a href="manage_events.html">Manage Events</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!--Main Dashboard-->
+            <main>
+                <section aria-labelledby="dashboard-title">
+                    <h1 id="dashboard-title">Admin Dashboard</h1>
+                    <p>Global Overview and Management Portal</p>
+
+                    <div>
+                        <a href="manage_students.html">Add new students</a>
+                        <a href="manage_events.html">Create new event</a>
+                    </div>
+                </section>
+
+                <section aria-labelledby="metrics-title">
+                    <h2 id="metrics-title">System Overview</h2>
+                    <ul>
+                        <li>
+                            <h3>Total Students</h3>
+                            <p>600</p>
+                        </li>
+
+                        <li>
+                            <h3>Active Faculty</h3>
+                            <p>50</p>
+                        </li>
+
+                        <li>
+                            <h3>Deparments</h3>
+                            <p>3</p>
+                        </li>
+                    </ul>
+                </section>
+
+                <section aria-labelledby="view-students">
+                    <h2 id="view-students">Student Records</h2>
+                    <p><a href="manage_students.html">View all students</a></p>
+                </section>
+            </main>
+        </div>
+
+        <!--Footer-->
+        <footer>
+            <p>&copy; 2026 StudentHub. All rights reserved.</p>
+
+            <nav aria-label="Footer Navigation">
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+            
+        </footer>
+    </body>
+</html>
