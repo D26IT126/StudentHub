@@ -6,6 +6,8 @@
   <meta charset="UTF-8"> <!-- Ensures proper character encoding -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes page responsive -->
   <title>StudentHub - Register</title> <!-- Title shown in browser tab -->
+  <!-- CSRF Token for form security -->
+  <meta name="csrf-token" content="">
 
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -26,7 +28,7 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="register.html">Register</a></li>
+        <li><a href="register.php">Register</a></li>
         <li><a href="login.html">Login</a></li>
         <li><a href="events.html">Events</a></li>
         <li><a href="faq.html">FAQ</a></li>
@@ -42,8 +44,10 @@
     <section class="form-card" aria-labelledby="register-title">
       <h2 id="register-title">Student Registration</h2>
       
-      <!-- Practical 5 form: JavaScript validates fields and reports errors next to each control. -->
-      <form class="portal-form validation-form" id="registration-form" action="#" method="post" novalidate>
+      <!-- Practical 7 form: JavaScript validates fields client-side; valid forms submit to PHP backend. -->
+      <form class="portal-form validation-form" id="registration-form" action="process_registration.php" method="post" novalidate>
+        <!-- CSRF Token for security -->
+        <input type="hidden" name="csrf_token" id="csrf-token" value="">
         <!-- Full name: letters and spaces only, with a minimum two-character name. -->
         <label for="name">Full Name <span aria-hidden="true">*</span></label>
         <input type="text" id="name" name="name" autocomplete="name" aria-describedby="name-error" required>

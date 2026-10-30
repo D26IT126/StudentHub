@@ -160,6 +160,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('registration-form');
   // Only initialize validation if the form exists on this page
   if (form) {
+    // Populate CSRF token from meta tag or generate client-side fallback
+    const csrfInput = document.getElementById('csrf-token');
+    if (csrfInput) {
+      // Try to get CSRF token from meta tag (set by PHP) or use a session-based approach
+      const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+      if (csrfMeta) {
+        csrfInput.value = csrfMeta.getAttribute('content');
+      } else {
+        // Generate a client-side token (server will validate via session)
+        csrfInput.value = generateClientCsrfToken();
+      }
+    }
+
+    // Handle URL parameters for server-side feedback
+    handleServerFeedback();
+
     const fields = {
       name: document.getElementById('name'),
       email: document.getElementById('email'),
@@ -313,23 +329,75 @@ document.addEventListener('DOMContentLoaded', () => {
       radio.addEventListener('change', validateGender);
     });
 
-    // Submission prevents the demo form from reloading and reports one clear outcome.
+    // Submission allows valid forms to proceed to the server while keeping instant feedback for errors.
     form.addEventListener('submit', (event) => {
-      event.preventDefault();
       const fieldsAreValid = Object.keys(fields).every(validateField);
       const genderIsValid = validateGender();
-      if (fieldsAreValid && genderIsValid) {
-        formStatus.textContent = 'Registration details are valid. You can now submit them to a server in a later practical.';
-        formStatus.className = 'form-status is-success';
-      } else {
+
+      if (!fieldsAreValid || !genderIsValid) {
+        event.preventDefault();
         formStatus.textContent = 'Please correct the highlighted fields and try again.';
         formStatus.className = 'form-status is-error';
         const firstInvalid = form.querySelector('[aria-invalid="true"], input[name="gender"]');
         if (firstInvalid) {
           firstInvalid.focus();
         }
+      } else {
+        formStatus.textContent = 'Registration details are valid. Submitting...';
+        formStatus.className = 'form-status is-success';
+        // Form will now naturally submit to the action URL (process_registration.php)
       }
     });
+  }
+
+  // Generate a client-side CSRF token (matches PHP session-based validation)
+  function generateClientCsrfToken() {
+    // Simple token generation for demo - in production this should come from server
+    let token = sessionStorage.getItem('client_csrf_token');
+    if (!token) {
+      const array = new Uint8Array(32);
+      crypto.getRandomValues(array);
+      token = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+      sessionStorage.setItem('client_csrf_token', token);
+    }
+    return token;
+  }
+
+  // Handle server-side validation feedback from URL parameters
+  function handleServerFeedback() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const formStatus = document.getElementById('form-status');
+
+    if (urlParams.has('success')) {
+      formStatus.textContent = 'Registration successful! Welcome to StudentHub.';
+      formStatus.className = 'form-status is-success';
+
+      // Add View Registrations button
+      const viewButton = document.createElement('a');
+      viewButton.href = 'view_registrations.php';
+      viewButton.className = 'btn btn-secondary view-registrations-btn';
+      viewButton.textContent = 'View All Registrations';
+      viewButton.style.marginLeft = '1rem';
+      formStatus.appendChild(viewButton);
+
+      // Clear the URL parameter
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (urlParams.has('errors')) {
+      const errors = decodeURIComponent(urlParams.get('errors')).split('|');
+      formStatus.textContent = errors.join(' ');
+      formStatus.className = 'form-status is-error';
+      // Clear the URL parameter
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (urlParams.has('error')) {
+      const errorMap = {
+        'invalid_method': 'Invalid request method. Please use the registration form.',
+        'csrf_invalid': 'Security token invalid. Please refresh the page and try again.'
+      };
+      const errorKey = urlParams.get('error');
+      formStatus.textContent = errorMap[errorKey] || 'An error occurred. Please try again.';
+      formStatus.className = 'form-status is-error';
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   }
 
   /* ============================================================
