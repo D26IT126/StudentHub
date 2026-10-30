@@ -21,7 +21,8 @@
     </div>
 
     <!-- Navigation menu with links to other pages -->
-    <nav aria-label="Main Navigation">
+    <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">☰</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main Navigation">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -41,58 +42,75 @@
     <section class="form-card" aria-labelledby="register-title">
       <h2 id="register-title">Student Registration</h2>
       
-      <!-- Skeleton form structure (no validation or styling yet) -->
-      <form class="portal-form" action="#" method="post">
-        <!-- Name field -->
-        <label for="name">Full Name:</label>
-        <input type="text" id="name" name="name" aria-required="true">
+      <!-- Practical 5 form: JavaScript validates fields and reports errors next to each control. -->
+      <form class="portal-form validation-form" id="registration-form" action="#" method="post" novalidate>
+        <!-- Full name: letters and spaces only, with a minimum two-character name. -->
+        <label for="name">Full Name <span aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" autocomplete="name" aria-describedby="name-error" required>
+        <p class="field-error" id="name-error" aria-live="polite"></p>
 
-        <!-- Email field -->
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" aria-required="true">
+        <!-- Email: browser type is supplemented by a JavaScript format check. -->
+        <label for="email">Email <span aria-hidden="true">*</span></label>
+        <input type="email" id="email" name="email" autocomplete="email" aria-describedby="email-error" required>
+        <p class="field-error" id="email-error" aria-live="polite"></p>
 
-        <!-- Password field -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" aria-required="true">
+        <!-- Mobile number: accepts a 10-digit Indian mobile number, optionally prefixed with +91. -->
+        <label for="mobile">Mobile Number <span aria-hidden="true">*</span></label>
+        <input type="tel" id="mobile" name="mobile" inputmode="numeric" autocomplete="tel" aria-describedby="mobile-error" required>
+        <p class="field-error" id="mobile-error" aria-live="polite"></p>
 
-        <!-- Confirm Password field -->
-        <label for="confirm-password">Confirm Password:</label>
-        <input type="password" id="confirm-password" name="confirm-password" aria-required="true">
+        <!-- Password: strength feedback is updated live by script.js. -->
+        <label for="password">Password <span aria-hidden="true">*</span></label>
+        <input type="password" id="password" name="password" autocomplete="new-password" aria-describedby="password-help password-error password-strength" required>
+        <p class="field-help" id="password-help">Use 8+ characters with uppercase, lowercase, a number, and a symbol.</p>
+        <div class="password-meter" aria-hidden="true"><span id="strength-bar"></span></div>
+        <p class="strength-text" id="password-strength" aria-live="polite">Password strength: not set</p>
+        <p class="field-error" id="password-error" aria-live="polite"></p>
 
-        <!-- Course selection -->
-        <label for="course">Course:</label>
-        <select id="course" name="course">
+        <!-- Confirmation must match the password exactly. -->
+        <label for="confirm-password">Confirm Password <span aria-hidden="true">*</span></label>
+        <input type="password" id="confirm-password" name="confirm-password" autocomplete="new-password" aria-describedby="confirm-password-error" required>
+        <p class="field-error" id="confirm-password-error" aria-live="polite"></p>
+
+        <!-- Course and year choices are required before registration can proceed. -->
+        <label for="course">Course <span aria-hidden="true">*</span></label>
+        <select id="course" name="course" aria-describedby="course-error" required>
           <option value="">--Select Course--</option>
           <option value="btech">B.Tech</option>
           <option value="mca">MCA</option>
           <option value="msc">M.Sc</option>
         </select>
+        <p class="field-error" id="course-error" aria-live="polite"></p>
 
         <!-- Year selection -->
-        <label for="year">Year:</label>
-        <select id="year" name="year">
+        <label for="year">Year <span aria-hidden="true">*</span></label>
+        <select id="year" name="year" aria-describedby="year-error" required>
           <option value="">--Select Year--</option>
           <option value="1">1st Year</option>
           <option value="2">2nd Year</option>
           <option value="3">3rd Year</option>
           <option value="4">4th Year</option>
         </select>
+        <p class="field-error" id="year-error" aria-live="polite"></p>
 
         <!-- Gender selection -->
         <fieldset>
-          <legend>Gender:</legend>
-          <label><input type="radio" name="gender" value="male"> Male</label>
+          <legend>Gender <span aria-hidden="true">*</span></legend>
+          <label><input type="radio" name="gender" value="male" required> Male</label>
           <label><input type="radio" name="gender" value="female"> Female</label>
           <label><input type="radio" name="gender" value="other"> Other</label>
         </fieldset>
+        <p class="field-error" id="gender-error" aria-live="polite"></p>
 
         <!-- Terms acceptance -->
         <label>
-          <input type="checkbox" name="terms" aria-required="true"> I accept the terms and conditions
+          <input type="checkbox" id="terms" name="terms" aria-describedby="terms-error" required> I accept the terms and conditions <span aria-hidden="true">*</span>
         </label>
+        <p class="field-error" id="terms-error" aria-live="polite"></p>
 
-        <!-- Submit button -->
+        <!-- Submit triggers a full validation pass; no data is sent in this frontend-only practical. -->
         <button type="submit">Register</button>
+        <p class="form-status" id="form-status" aria-live="polite"></p>
       </form>
     </section>
   </main>
@@ -125,5 +143,7 @@
       <a href="login.html">Student login</a>
     </div>
   </footer>
+  <!-- Practical 5 validation logic is kept in its own documented JavaScript file. -->
+  <script src="js/script.js"></script>
 </body>
 </html>

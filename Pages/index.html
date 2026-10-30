@@ -21,7 +21,8 @@
       <!-- Visual-only control reserved for a future theme feature. -->
       <button class="theme-toggle" type="button">Change Theme</button>
     </div>
-    <nav aria-label="Main Navigation">
+    <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">☰</button>
+    <nav id="site-nav" class="site-nav" aria-label="Main Navigation">
       <ul>
         <li><a href="index.html" aria-current="page">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -43,10 +44,15 @@
         <p>Discover campus events, manage your academic journey, and stay connected with everything happening at StudentHub.</p>
         <a class="primary-link" href="register.html">Join StudentHub</a>
       </div>
-      <!-- Generated administration-building image with an accessible description. -->
-      <figure class="campus-figure">
-        <img src="assets/studenthub-admin-building.png" alt="StudentHub administration building on a sunny campus day">
-        <figcaption>The StudentHub administration building—your campus connection point.</figcaption>
+      <!-- Accessible three-image slider controlled by js/script.js. -->
+      <figure class="campus-figure campus-slider" aria-roledescription="carousel" aria-label="StudentHub campus highlights">
+        <img id="slider-image" src="assets/studenthub-admin-building.png" alt="StudentHub administration building on a sunny campus day">
+        <figcaption id="slider-caption">The StudentHub administration building—your campus connection point.</figcaption>
+        <div class="slider-controls">
+          <button class="slider-button" type="button" data-slider-action="previous" aria-label="Show previous campus image">‹</button>
+          <p class="slider-status" id="slider-status" aria-live="polite">Image 1 of 3</p>
+          <button class="slider-button" type="button" data-slider-action="next" aria-label="Show next campus image">›</button>
+        </div>
       </figure>
     </section>
     <section class="live-notification" aria-live="polite">
@@ -118,5 +124,7 @@
       <a href="login.html">Student login</a>
     </div>
   </footer>
+  <!-- Practical 4 script enables the slider, notification controls, and persistent theme. -->
+  <script src="js/script.js"></script>
 </body>
 </html>

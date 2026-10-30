@@ -1,6 +1,6 @@
 /* ================================================================
    StudentHub shared stylesheet
-   This is the only stylesheet used by every Practical 3 page.
+   This is the only stylesheet used by every Practical 5 page.
    ================================================================ */
 
 /* Design tokens: shared colours, translucent surfaces, and shadows. */
@@ -924,4 +924,127 @@ footer {
     transition-duration:.01ms!important;
   }
 
+}
+
+/* Practical 4 slider controls: buttons stay usable with mouse and keyboard. */
+.campus-slider { position:relative; }
+.slider-controls { display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:.65rem .9rem; background:var(--surface); }
+.slider-button { width:2.25rem; height:2.25rem; padding:0; color:#fff; font-size:1.5rem; line-height:1; background:var(--navy); border:0; border-radius:50%; }
+.slider-button:hover,.slider-button:focus-visible { background:var(--blue); transform:translateY(-1px); }
+.slider-status { color:var(--muted); font-size:.85rem; font-weight:700; }
+.live-notification[hidden] { display:none; }
+
+/* ================================================================
+   Practical 5 - registration validation feedback
+   These rules support the JavaScript messages in js/script.js.
+   ================================================================ */
+
+/* Reserve a small area below every field so live error messages do not shift the form. */
+.validation-form .field-error,
+.validation-form .field-help,
+.validation-form .strength-text,
+.validation-form .form-status {
+  margin:0 0 .35rem;
+  font-size:.85rem;
+}
+
+.validation-form .field-help,
+.validation-form .strength-text {
+  color:var(--muted);
+}
+
+/* Errors are announced through aria-live in the HTML and reinforced visually here. */
+.validation-form .field-error {
+  min-height:1.25rem;
+  color:#b42318;
+  font-weight:600;
+}
+
+.validation-form .is-invalid {
+  border-color:#d92d20;
+  box-shadow:0 0 0 3px rgba(217,45,32,.14);
+}
+
+/* Four-step meter: the script sets width and the data-level attribute. */
+.password-meter {
+  width:100%;
+  height:.45rem;
+  overflow:hidden;
+  margin:.1rem 0 .35rem;
+  background:#dfe8f5;
+  border-radius:999px;
+}
+
+.password-meter span {
+  display:block;
+  width:0;
+  height:100%;
+  background:#d92d20;
+  border-radius:inherit;
+  transition:width .2s ease,background .2s ease;
+}
+
+.password-meter span[data-level="2"] {
+  background:#e5a000;
+}
+
+.password-meter span[data-level="3"] {
+  background:#259b5d;
+}
+
+.password-meter span[data-level="4"] {
+  background:#087a4a;
+}
+
+/* The final status confirms a valid demo submission or directs attention to errors. */
+.validation-form .form-status {
+  min-height:1.5rem;
+  padding:.7rem .85rem;
+  border-radius:.55rem;
+}
+
+.validation-form .form-status.is-success {
+  color:#075f3d;
+  background:#d9f7e7;
+}
+
+.validation-form .form-status.is-error {
+  color:#8a1c14;
+  background:#ffebe9;
+}
+
+body.dark-theme .validation-form .field-error {
+  color:#ffb4ab;
+}
+
+body.dark-theme .password-meter {
+  background:#28486d;
+}
+
+/* Practical 4 hamburger menu - P4 only */
+.nav-toggle {
+  display:none;
+  padding:.5rem .75rem;
+  color:#fff;
+  font-size:1.5rem;
+  line-height:1;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.4);
+  border-radius:.5rem;
+}
+.nav-toggle:hover,.nav-toggle:focus-visible {
+  background:rgba(255,255,255,.28);
+}
+.site-nav.is-open ul {
+  display:flex;
+}
+@media (max-width:700px) {
+  .nav-toggle { display:inline-block; }
+  .site-nav ul { display:none; flex-direction:column; gap:.5rem; padding:.75rem 0; }
+  .site-nav.is-open ul { display:flex; }
+  .site-nav a { display:block; padding:.5rem .25rem; }
+}
+@media (min-width:701px) {
+  .nav-toggle { display:none !important; }
+  .site-nav ul { display:flex !important; }
 }
