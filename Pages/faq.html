@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<!-- FAQ page: native details/summary elements provide a no-JavaScript accordion. -->
+<!-- FAQ page: questions and answers are loaded from faqs.json and rendered dynamically. -->
 <html lang="en">
 <head>
-  <!-- Metadata about the page -->
-  <meta charset="UTF-8"> <!-- Ensures proper character encoding -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes page responsive -->
-  <title>StudentHub - FAQ</title> <!-- Title shown in browser tab -->
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Search and browse frequently asked questions about StudentHub.">
+  <title>StudentHub - FAQ</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Header section with site title and navigation -->
   <header class="site-header">
     <div class="header-top">
       <a class="brand" href="index.html" aria-label="StudentHub home">
@@ -20,10 +18,7 @@
       <button class="theme-toggle" type="button">Change Theme</button>
     </div>
 
-    <!-- Hamburger menu toggle for mobile navigation -->
     <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">☰</button>
-
-    <!-- Navigation menu with links to other pages -->
     <nav id="site-nav" class="site-nav" aria-label="Main Navigation">
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -31,48 +26,50 @@
         <li><a href="register.html">Register</a></li>
         <li><a href="login.html">Login</a></li>
         <li><a href="events.html">Events</a></li>
-        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="students.html">Students</a></li>
+        <li><a href="faq.html" aria-current="page">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="feedback.html">Feedback</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Main content area -->
-  <main class="faq-page">
-    <!-- Section for frequently asked questions -->
-    <section class="faq-section" aria-labelledby="faq-title">
-      <div class="faq-heading">
+  <main class="data-page faq-page">
+    <section class="data-section" data-dataset="faqs" aria-labelledby="faq-title">
+      <div class="data-heading">
         <p class="eyebrow">Need a hand?</p>
         <h2 id="faq-title">Frequently Asked Questions</h2>
-        <p>Select a question to reveal its answer.</p>
+        <p>Search the knowledge base or narrow the list by topic. Select a question to reveal its answer.</p>
       </div>
 
-      <div class="faq-list">
-      <details class="faq-item">
-        <summary>How do I register on StudentHub?</summary>
-        <p>You can register by visiting the Register page and filling out the form with your details.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>How do I log in?</summary>
-        <p>Go to the Login page, enter your email and password, and select your role (Student/Admin).</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Who can access the Admin Dashboard?</summary>
-        <p>Only users with admin roles can access the Admin Dashboard.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>How can I contact support?</summary>
-        <p>Visit the Contact page and use the form to send a message to the support team.</p>
-      </details>
+      <div class="data-controls" aria-label="FAQ search and filters">
+        <div class="control-group">
+          <label for="faq-search">Search questions and answers</label>
+          <input id="faq-search" data-search type="search" placeholder="Search FAQs..." autocomplete="off">
+        </div>
+        <div class="control-group">
+          <label for="faq-category">Filter by category</label>
+          <select id="faq-category" data-filter>
+            <option value="">All categories</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="faq-sort">Sort by</label>
+          <select id="faq-sort" data-sort>
+            <option value="question-asc">Question: A to Z</option>
+            <option value="question-desc">Question: Z to A</option>
+            <option value="updated-asc">Last updated: oldest first</option>
+            <option value="updated-desc">Last updated: newest first</option>
+          </select>
+        </div>
       </div>
+
+      <p id="faq-status" class="data-status" data-status aria-live="polite">Loading FAQs...</p>
+      <div id="faq-results" class="faq-list" data-results></div>
+      <nav class="pagination" data-pagination aria-label="FAQ pagination"></nav>
     </section>
   </main>
 
-  <!-- Footer section -->
   <footer>
     <div class="footer-content">
       <div class="footer-brand">
@@ -86,6 +83,7 @@
         <h2>Explore</h2>
         <a href="about.html">About StudentHub</a>
         <a href="events.html">Campus events</a>
+        <a href="students.html">Student profiles</a>
         <a href="faq.html">Frequently asked questions</a>
       </div>
       <div class="footer-links">
@@ -100,7 +98,8 @@
       <a href="login.html">Student login</a>
     </div>
   </footer>
-  <!-- Practical 4 script enables the slider, notification controls, and persistent theme. -->
+
   <script src="js/script.js"></script>
+  <script src="js/practical6.js"></script>
 </body>
 </html>
